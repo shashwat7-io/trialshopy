@@ -14,8 +14,6 @@ interface OutfitControlsProps {
   aiResultUrl: string | null;
   captureTimer: 0 | 3;
   onSetCaptureTimer: (sec: 0 | 3) => void;
-  tryOnMode: 'auto' | 'studio' | 'cloud';
-  onSetTryOnMode: (m: 'auto' | 'studio' | 'cloud') => void;
   onAiTryOn: () => void;
   onReset: () => void;
   onSave: () => void;
@@ -31,8 +29,6 @@ export default function OutfitControls({
   aiResultUrl,
   captureTimer,
   onSetCaptureTimer,
-  tryOnMode,
-  onSetTryOnMode,
   onAiTryOn,
   onReset,
   onSave,
@@ -160,31 +156,12 @@ export default function OutfitControls({
               <span className="text-[11px] font-semibold text-soft flex items-center gap-1.5">
                 <Wand2 size={12} className="text-muted" /> AI Engine
               </span>
-              <span className="text-[10px] text-accent-light font-medium capitalize">
-                {tryOnMode === 'auto' ? 'Smart Auto' : tryOnMode === 'studio' ? 'Instant Studio' : 'Diffusion HD'}
+              <span className="flex items-center gap-1 text-[10px] text-emerald font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" /> IDM-VTON Diffusion
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-1.5 bg-card border border-border rounded-xl p-1">
-              <button
-                onClick={() => onSetTryOnMode('auto')}
-                className={`py-1.5 rounded-lg text-[10px] font-semibold transition-all ${
-                  tryOnMode === 'auto'
-                    ? 'bg-accent text-white shadow-glow-sm'
-                    : 'text-muted hover:text-bright'
-                }`}
-              >
-                Photorealistic AI (Auto)
-              </button>
-              <button
-                onClick={() => onSetTryOnMode('studio')}
-                className={`py-1.5 rounded-lg text-[10px] font-semibold transition-all ${
-                  tryOnMode === 'studio'
-                    ? 'bg-accent text-white shadow-glow-sm'
-                    : 'text-muted hover:text-bright'
-                }`}
-              >
-                Instant Studio (2s)
-              </button>
+            <div className="p-2 rounded-xl bg-card border border-border text-[10px] text-muted leading-relaxed">
+              Synthesizes realistic fabric drape, shadows & fit using deep generative diffusion.
             </div>
           </div>
         </div>

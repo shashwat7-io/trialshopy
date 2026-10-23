@@ -38,9 +38,8 @@ export default function App() {
   const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
   const [capturedPhotoUrl, setCapturedPhotoUrl] = useState<string | null>(null);
 
-  // Capture timer & mode preferences
+  // Capture timer preferences
   const [captureTimer, setCaptureTimer] = useState<0 | 3>(3);
-  const [tryOnMode, setTryOnMode]       = useState<'auto' | 'studio' | 'cloud'>('auto');
 
   // Animation states
   const [countdown, setCountdown]   = useState<number | null>(null);
@@ -102,8 +101,6 @@ export default function App() {
         (progress) => setAiProgress(progress),
         {
           garment: targetGarment,
-          landmarks: latestLandmarks.current,
-          mode: tryOnMode,
         }
       );
 
@@ -118,7 +115,7 @@ export default function App() {
       setAiProgress({ status: 'error', message: msg });
       showToast(`AI Try-On failed: ${msg}`, 'error');
     }
-  }, [tryOnMode, showToast]);
+  }, [showToast]);
 
   // ── Capture with 3s Timer or Instant Shutter ──────────────────────────────
   const handleAiTryOn = useCallback(async () => {
@@ -250,8 +247,6 @@ export default function App() {
           aiResultUrl={aiResultUrl}
           captureTimer={captureTimer}
           onSetCaptureTimer={setCaptureTimer}
-          tryOnMode={tryOnMode}
-          onSetTryOnMode={setTryOnMode}
           onAiTryOn={handleAiTryOn}
           onReset={handleReset}
           onSave={handleSave}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ArrowLeftRight, Columns, Download, Maximize2, RefreshCw, Save,
+  ArrowLeftRight, Columns, Download, RefreshCw, Save,
   Sparkles, X, CheckCircle2, ShieldCheck, ZoomIn, ZoomOut
 } from 'lucide-react';
 import type { Garment } from '../types';
@@ -27,9 +27,9 @@ export default function TryOnResult({
   const compareRef = useRef<HTMLDivElement | null>(null);
   const dividerRef = useRef<HTMLDivElement | null>(null);
 
-  const [viewMode, setViewMode] = useState<'slider' | 'side-by-side'>('slider');
+  const [viewMode, setViewMode]   = useState<'slider' | 'side-by-side'>('slider');
   const [sliderPct, setSliderPct] = useState(50);
-  const [isZoomed, setIsZoomed] = useState(false);
+  const [isZoomed, setIsZoomed]   = useState(false);
 
   // ── Drag-to-compare logic ──────────────────────────────────────────────────
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function TryOnResult({
                 {garment ? `${garment.name} • ${garment.brand || 'TrialShopy Fashion'}` : 'Photorealistic Try-On'}
               </p>
             </div>
-            <span className="tag-ai ml-2">High-Res Synthesis</span>
+            <span className="tag-ai ml-2">IDM-VTON Diffusion</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -160,21 +160,21 @@ export default function TryOnResult({
                 height: 'min(690px, 66vh)',
               }}
             >
-              {/* Original Photo (Underneath) */}
+              {/* Underlying Base Layer: AI Try-On Result (Right Side) */}
               <img
-                src={originalPhoto}
-                alt="Original photo"
+                src={resultImage}
+                alt="AI Try-on result"
                 className="absolute inset-0 w-full h-full object-cover"
               />
 
-              {/* Try-On Result (Clipped overlay) */}
+              {/* Clipped Top Layer: Original Photo (Left Side from 0 to sliderPct%) */}
               <div
                 className="absolute inset-0 overflow-hidden"
                 style={{ width: `${sliderPct}%` }}
               >
                 <img
-                  src={resultImage}
-                  alt="Try-on result"
+                  src={originalPhoto}
+                  alt="Original photo"
                   className="absolute inset-0 h-full object-cover"
                   style={{
                     width: 'min(520px, 86vw)',
@@ -194,11 +194,11 @@ export default function TryOnResult({
                 </div>
               </div>
 
-              {/* Badges */}
-              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] text-white/90 font-semibold border border-white/10 pointer-events-none">
+              {/* Badges — correctly aligned to image layers */}
+              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] text-white/90 font-semibold border border-white/10 pointer-events-none z-10">
                 Original
               </div>
-              <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-accent/90 backdrop-blur-md text-[10px] text-white font-semibold border border-white/20 pointer-events-none">
+              <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-accent/90 backdrop-blur-md text-[10px] text-white font-semibold border border-white/20 pointer-events-none z-10">
                 AI Try-On
               </div>
             </div>
@@ -207,7 +207,7 @@ export default function TryOnResult({
             <div className="flex gap-4 items-center justify-center max-w-full">
               {originalPhoto && (
                 <div className="flex flex-col items-center gap-1.5">
-                  <span className="text-[10px] font-semibold text-muted uppercase tracking-wider">Before</span>
+                  <span className="text-[10px] font-semibold text-muted uppercase tracking-wider">Original</span>
                   <div className="rounded-xl overflow-hidden border border-border shadow-lg max-h-[64vh] aspect-[3/4]">
                     <img src={originalPhoto} alt="Original" className="w-full h-full object-cover" />
                   </div>
@@ -215,7 +215,7 @@ export default function TryOnResult({
               )}
               <div className="flex flex-col items-center gap-1.5">
                 <span className="text-[10px] font-semibold text-accent-light uppercase tracking-wider flex items-center gap-1">
-                  <Sparkles size={10} /> After (AI Try-On)
+                  <Sparkles size={10} /> AI Try-On
                 </span>
                 <div className="rounded-xl overflow-hidden border border-accent/50 shadow-glow max-h-[64vh] aspect-[3/4]">
                   <img src={resultImage} alt="Try-On Result" className="w-full h-full object-cover" />
@@ -229,14 +229,14 @@ export default function TryOnResult({
         <div className="flex-none px-6 py-2.5 bg-card/40 border-t border-border flex items-center justify-between text-[11px] text-soft flex-wrap gap-3">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-emerald font-semibold">
-              <CheckCircle2 size={13} /> Fit Match: 98%
+              <CheckCircle2 size={13} /> Photorealistic AI
             </span>
             <span className="flex items-center gap-1.5 text-soft">
-              <ShieldCheck size={13} className="text-accent-light" /> Shoulder Alignment: Natural Drape
+              <ShieldCheck size={13} className="text-accent-light" /> Neural Fabric Warp & Mask
             </span>
             <span className="hidden sm:inline text-muted">•</span>
             <span className="hidden sm:inline text-muted">
-              Fabric Lighting: Harmonized
+              Auto Lighting Harmonized
             </span>
           </div>
 
@@ -251,7 +251,7 @@ export default function TryOnResult({
               onClick={onSave}
               className="btn-ghost text-[11px] py-1.5 gap-1 border-accent/30 text-accent-light hover:bg-accent/10"
             >
-              <Save size={11} /> Save to Wardrobe
+              <Save size={11} /> Save Look
             </button>
             <button
               onClick={handleDownload}
