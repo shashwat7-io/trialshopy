@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-base text-bright font-sans antialiased;
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-muted; }
+}
+
+@layer components {
+  .glass {
+    background: rgba(22, 22, 42, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl
+           bg-accent hover:bg-violet-600 active:bg-violet-700
+           text-white text-sm font-semibold
+           transition-all duration-200 shadow-glow-sm hover:shadow-glow
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl
+           bg-card hover:bg-border border border-border hover:border-accent/40
+           text-soft hover:text-bright text-sm font-medium
+           transition-all duration-200
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl
+           bg-red-950 hover:bg-red-900 border border-red-800 hover:border-red-600
+           text-red-300 hover:text-red-200 text-sm font-medium
+           transition-all duration-200
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .panel {
+    @apply bg-surface border border-border rounded-2xl overflow-hidden;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider;
+  }
+
+  .tag-live   { @apply badge bg-emerald/10 text-emerald border border-emerald/20; }
+  .tag-demo   { @apply badge bg-accent/10 text-accent-light border border-accent/20; }
+  .tag-ai     { @apply badge bg-violet-900/50 text-violet-300 border border-violet-700/30; }
+
+  .shimmer {
+    background: linear-gradient(90deg, #16162a 25%, #1e1e3a 50%, #16162a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .garment-card {
+    @apply relative bg-card border border-border rounded-xl overflow-hidden cursor-pointer
+           transition-all duration-200 hover:border-accent/50 hover:shadow-glow-sm hover:-translate-y-0.5;
+  }
+
+  .garment-card.selected {
+    @apply border-accent shadow-glow;
+  }
+}
