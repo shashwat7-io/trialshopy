@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: trialshopy
+    runtime: static
+    repo: https://github.com/shashwat7-io/trialshopy
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+    headers:
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(self)
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

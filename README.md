@@ -80,3 +80,9 @@ src/
 ## 📝 License
 
 MIT
+
+## Deploy
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shashwat7-io/trialshopy)
+
+Deploys as a free Render **Static Site** using `render.yaml` (HTTPS is required for camera access).
